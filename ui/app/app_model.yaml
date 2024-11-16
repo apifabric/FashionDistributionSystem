@@ -1,0 +1,535 @@
+about:
+  date: November 16, 2024 19:33:12
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Brand:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: establishment_year
+      template: integer
+      type: INTEGER
+    - name: number_of_designs
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: A fashion brand associated with designers and collections.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: A fashion brand associated with designers and collections.
+    label: Brand
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - brand_id
+      name: CampaignList
+      resource: Campaign
+    - direction: tomany
+      fks:
+      - brand_id
+      name: CollectionList
+      resource: Collection
+    type: Brand
+  Campaign:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: brand_id
+      template: integer
+      type: INTEGER
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Marketing campaigns for brand collections.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Marketing campaigns for brand collections.
+    label: Campaign
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - campaign_id
+      name: ParticipationList
+      resource: Participation
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    type: Campaign
+  Collection:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: brand_id
+      template: integer
+      type: INTEGER
+    - name: designer_id
+      template: integer
+      type: INTEGER
+    - name: season
+      required: true
+      template: text
+      type: VARCHAR
+    - name: year
+      template: integer
+      type: INTEGER
+    - name: total_revenue
+      template: integer
+      type: INTEGER
+    description: A collection of fashion designs by a designer under a specific brand.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: A collection of fashion designs by a designer under a specific brand.
+    label: Collection
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - collection_id
+      name: DesignList
+      resource: Design
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    type: Collection
+  Design:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: collection_id
+      template: integer
+      type: INTEGER
+    - name: Type
+      template: text
+      type: VARCHAR
+    - name: unit_price
+      template: integer
+      type: INTEGER
+    - name: revenue
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    - name: amount_sold
+      template: integer
+      type: INTEGER
+    description: A specific fashion design within a collection.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: A specific fashion design within a collection.
+    label: Design
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - design_id
+      name: StockList
+      resource: Stock
+    - direction: toone
+      fks:
+      - collection_id
+      name: collection
+      resource: Collection
+    type: Design
+  Designer:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: balance
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    - name: date_joined
+      type: DATETIME
+    description: A designer who creates fashion designs for a brand.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: A designer who creates fashion designs for a brand.
+    label: Designer
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - designer_id
+      name: CollectionList
+      resource: Collection
+    - direction: tomany
+      fks:
+      - designer_id
+      name: ParticipationList
+      resource: Participation
+    - direction: tomany
+      fks:
+      - designer_id
+      name: SupplyList
+      resource: Supply
+    type: Designer
+  Location:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: region
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Describes various geographic locations relevant to stores.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Describes various geographic locations relevant to stores.
+    label: Location
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Location
+  Participation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: campaign_id
+      template: integer
+      type: INTEGER
+    - name: designer_id
+      template: integer
+      type: INTEGER
+    description: Participation of designers in various campaigns.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Participation of designers in various campaigns.
+    label: Participation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - campaign_id
+      name: campaign
+      resource: Campaign
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    type: Participation
+  Sale:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: stock_id
+      template: integer
+      type: INTEGER
+    - name: sale_date
+      required: true
+      type: DATETIME
+    - name: amount
+      required: true
+      template: integer
+      type: INTEGER
+    description: Sales transactions for specific designs at a store.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Sales transactions for specific designs at a store.
+    label: Sale
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: Sale
+  Stock:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: design_id
+      template: integer
+      type: INTEGER
+    - name: store_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      template: integer
+      type: INTEGER
+    description: Stock details for designs available at stores.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stock details for designs available at stores.
+    label: Stock
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - stock_id
+      name: SaleList
+      resource: Sale
+    - direction: toone
+      fks:
+      - design_id
+      name: design
+      resource: Design
+    - direction: toone
+      fks:
+      - store_id
+      name: store
+      resource: Store
+    type: Stock
+  Store:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: location
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Store that sells fashion designs from various collections.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Store that sells fashion designs from various collections.
+    label: Store
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - store_id
+      name: StockList
+      resource: Stock
+    type: Store
+  Supplier:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_info
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Suppliers providing materials for creating fashion designs.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Suppliers providing materials for creating fashion designs.
+    label: Supplier
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: SupplyList
+      resource: Supply
+    type: Supplier
+  Supply:
+    columns:
+    - label: ' material_name*'
+      name: material_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: designer_id
+      template: integer
+      type: INTEGER
+    - name: supplier_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    - name: date_provided
+      type: DATETIME
+    description: Details of supplies provided to designers for creating designs.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: material_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Details of supplies provided to designers for creating designs.
+    label: Supply
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Supply
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

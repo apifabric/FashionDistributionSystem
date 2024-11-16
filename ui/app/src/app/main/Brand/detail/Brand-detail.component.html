@@ -1,0 +1,143 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Brand_form_edit" 
+        service="Brand" 
+        entity="Brand" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #establishment_year attr="establishment_year" label="establishment_year" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-integer-input #number_of_designs attr="number_of_designs" label="number_of_designs" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="CAMPAIGN-brand_id">
+    <div layout-padding>
+      <o-table 
+        attr="CampaignTable" 
+        service="Campaign" 
+        entity="Campaign" 
+        keys="id"
+        parent-keys="brand_id:id"
+        columns="name;brand_id;start_date;end_date;id"  
+        horizontal-scroll="yes"
+        detail-form-route="Campaign" 
+        edit-form-route="Campaign"
+        visible-columns="name;brand_id;start_date;end_date;id"  
+        sort-columns="name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column attr="brand_id" title="brand_id">
+    <o-table-cell-renderer-service attr="brand_id" 
+        service="Brand" entity="BrandType" columns="id;name"
+        parent-keys="id:brand_id"
+        value-column="name" keys="brand_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="COLLECTION-brand_id">
+    <div layout-padding>
+      <o-table 
+        attr="CollectionTable" 
+        service="Collection" 
+        entity="Collection" 
+        keys="id"
+        parent-keys="brand_id:id"
+        columns="id;brand_id;designer_id;season;year;total_revenue"  
+        horizontal-scroll="yes"
+        detail-form-route="Collection" 
+        edit-form-route="Collection"
+        visible-columns="id;brand_id;designer_id;season;year;total_revenue"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="brand_id" title="brand_id">
+    <o-table-cell-renderer-service attr="brand_id" 
+        service="Brand" entity="BrandType" columns="id;name"
+        parent-keys="id:brand_id"
+        value-column="name" keys="brand_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #season attr="season" title="season" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #year attr="year" title="year" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #total_revenue attr="total_revenue" title="total_revenue" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

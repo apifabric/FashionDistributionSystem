@@ -1,0 +1,111 @@
+{
+    "name": "Elegance Couture Distribution",
+    "logo": {
+        "Type": "Logo",
+        "name": "Elegance Couture Logo",
+        "description": "Sleek, minimalist logo representing high fashion and elegance with a stylized 'E' embraced by a regal frame."
+    },
+    "sections": [
+        {
+            "title": "Unlock Timeless Elegance",
+            "subtitle": "Elevate Your Fashion Collection",
+            "name": "HeroSection",
+            "label": "Home",
+            "content": "Welcome to Elegance Couture Distribution, where luxury meets style. Discover the finest designer brands that redefine fashion. Join us on a journey toward sophistication.",
+            "order": 1,
+            "Type": "Hero",
+            "images": [
+                {
+                    "Type": "Hero",
+                    "name": "Hero Banner",
+                    "description": "Model showcasing a designer outfit amidst an elegant backdrop"
+                }
+            ]
+        },
+        {
+            "title": "About Elegance Couture Distribution",
+            "subtitle": "Our Legacy of Style",
+            "name": "AboutUs",
+            "label": "About",
+            "content": "At **Elegance Couture Distribution**, we pride ourselves on being more than just a distributor. With over a decade of experience, we are curators of the world's most prestigious designer brands, ensuring that every piece we offer embodies elegance and style. Our commitment to quality and fashion excellence drives us to provide our clients with unparalleled collections that speak volumes about luxury and sophistication.",
+            "order": 2,
+            "Type": "About",
+            "images": [
+                {
+                    "Type": "Background",
+                    "name": "About Us Background",
+                    "description": "Elegant pattern or texture that embodies luxury and style"
+                }
+            ]
+        },
+        {
+            "title": "What We Offer",
+            "subtitle": "A World of Fashion",
+            "name": "OurServices",
+            "label": "Services",
+            "content": "- **Exclusive Designer Collections**: From runway favorites to emerging talents, explore a curated selection of brands.\n- **Personalized Procurement**: Tailored solutions to fit your boutique's specific style and clientele.\n- **Brand Consultancy**: Expert advice to elevate your retail business in the fast-paced fashion industry.\n- **Swift and Reliable Distribution**: Ensuring your desired styles are available on time, every time.",
+            "order": 3,
+            "Type": "Services",
+            "images": [
+                {
+                    "Type": "ItemListing",
+                    "name": "Designer Collections",
+                    "description": "Fine apparel from various notable designers"
+                }
+            ]
+        },
+        {
+            "title": "Our Latest Creations",
+            "subtitle": "Spring/Summer 2024 Collection",
+            "name": "FashionGallery",
+            "label": "Collections",
+            "content": "Welcome to our gallery showcasing the latest in timeless designs from our collection. Each piece is a masterpiece that tells a story of elegance, craftsmanship, and fashion evolution.",
+            "order": 4,
+            "Type": "Gallery",
+            "images": [
+                {
+                    "Type": "Gallery",
+                    "name": "SS2024 Look 1",
+                    "description": "A chic, modern outfit featuring vibrant colors and bold patterns"
+                },
+                {
+                    "Type": "Gallery",
+                    "name": "SS2024 Look 2",
+                    "description": "Elegant evening wear that blends classic design with contemporary flair"
+                }
+            ]
+        },
+        {
+            "title": "Inspired by Our Clients",
+            "subtitle": "What Our Customers Are Saying",
+            "name": "Testimonials",
+            "label": "Testimonials",
+            "content": "\"Elegance Couture Distribution has transformed our inventory with their stunning array of clothing. Our clients love the diversity and quality.\" \u2014 **Maria L., Boutique Owner**\n\n\"Their attention to detail and understanding of the latest trends keep us ahead in the fashion game.\" \u2014 **James T., Retail Manager**",
+            "order": 5,
+            "Type": "Testimonials",
+            "images": [
+                {
+                    "Type": "Testimonial",
+                    "name": "Customer Portrait Maria",
+                    "description": "Satisfied boutique owner"
+                }
+            ]
+        },
+        {
+            "title": "Contact Us",
+            "subtitle": "Let's Connect and Collaborate",
+            "name": "ContactUs",
+            "label": "Contact",
+            "content": "We are here to assist with all your fashion distribution needs. Get in touch to discover how Elegance Couture Distribution can enhance your collection:\n\n- **Email**: contact@elegancecouture.com  \n- **Phone**: +1 234 567 8901  \n- **Address**: 123 Fashion Avenue, Suite 45, New York, NY 10001  \n\nOr simply fill out our contact form to get a quick response from our team.",
+            "order": 6,
+            "Type": "Contact",
+            "images": [
+                {
+                    "Type": "Icon",
+                    "name": "Contact Icon",
+                    "description": "Small icon representing contact, such as a phone or envelope"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,123 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Brand: A fashion brand associated with designers and collections.
+Campaign: Marketing campaigns for brand collections.
+Collection: A collection of fashion designs by a designer under a specific brand.
+Designer: A designer who creates fashion designs for a brand.
+Design: A specific fashion design within a collection.
+Location: Describes various geographic locations relevant to stores.
+Participation: Participation of designers in various campaigns.
+Sale: Sales transactions for specific designs at a store.
+Stock: Stock details for designs available at stores.
+Store: Store that sells fashion designs from various collections.
+Supplier: Suppliers providing materials for creating fashion designs.
+Supply: Details of supplies provided to designers for creating designs.
+'''
+}
+
+Table Brand {
+    id INTEGER [primary key]
+    name VARCHAR 
+    establishment_year INTEGER 
+    number_of_designs INTEGER 
+    }
+
+Table Campaign {
+    id INTEGER [primary key]
+    brand_id INTEGER 
+    name VARCHAR 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Collection {
+    id INTEGER [primary key]
+    designer_id INTEGER 
+    brand_id INTEGER 
+    season VARCHAR 
+    year INTEGER 
+    total_revenue INTEGER 
+    }
+
+Table Designer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    date_joined DATETIME 
+    balance INTEGER 
+    }
+
+Table Design {
+    id INTEGER [primary key]
+    collection_id INTEGER 
+    name VARCHAR 
+    Type VARCHAR 
+    amount_sold INTEGER 
+    unit_price INTEGER 
+    revenue INTEGER 
+    }
+
+Table Location {
+    id INTEGER [primary key]
+    name VARCHAR 
+    region VARCHAR 
+    }
+
+Table Participation {
+    id INTEGER [primary key]
+    designer_id INTEGER 
+    campaign_id INTEGER 
+    }
+
+Table Sale {
+    id INTEGER [primary key]
+    stock_id INTEGER 
+    sale_date DATETIME 
+    amount INTEGER 
+    }
+
+Table Stock {
+    id INTEGER [primary key]
+    store_id INTEGER 
+    design_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Store {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+Table Supply {
+    id INTEGER [primary key]
+    supplier_id INTEGER 
+    designer_id INTEGER 
+    material_name VARCHAR 
+    quantity INTEGER 
+    date_provided DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: Campaign.(brand_id) < Brand.(id)
+    Ref: Collection.(brand_id) < Brand.(id)
+    Ref: Collection.(designer_id) < Designer.(id)
+    Ref: Design.(collection_id) < Collection.(id)
+    Ref: Participation.(campaign_id) < Campaign.(id)
+    Ref: Participation.(designer_id) < Designer.(id)
+    Ref: Sale.(stock_id) < Stock.(id)
+    Ref: Stock.(design_id) < Design.(id)
+    Ref: Stock.(store_id) < Store.(id)
+    Ref: Supply.(designer_id) < Designer.(id)
+    Ref: Supply.(supplier_id) < Supplier.(id)

@@ -1,0 +1,37 @@
+<o-form-layout-manager attr="Brand" mode="tab" title="BRAND">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="BrandTable" 
+            service="Brand" 
+            entity="Brand" 
+            title="BRAND"
+            keys="id"
+            columns="name;establishment_year;number_of_designs;id" 
+            header-actions="R;D"
+            visible-columns="name;establishment_year;number_of_designs;id"  
+            sort-columns="name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #name attr="name" title=" name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #establishment_year attr="establishment_year" title="establishment_year" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #number_of_designs attr="number_of_designs" title="number_of_designs" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

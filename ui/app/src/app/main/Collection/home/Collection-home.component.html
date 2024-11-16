@@ -1,0 +1,55 @@
+<o-form-layout-manager attr="Collection" mode="tab" title="COLLECTION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CollectionTable" 
+            service="Collection" 
+            entity="Collection" 
+            title="COLLECTION"
+            keys="id"
+            columns="id;brand_id;designer_id;season;year;total_revenue" 
+            header-actions="R;D"
+            visible-columns="id;brand_id;designer_id;season;year;total_revenue"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="brand_id" title="brand_id">
+    <o-table-cell-renderer-service attr="brand_id" 
+        service="Brand" entity="BrandType" columns="id;name"
+        parent-keys="id:brand_id"
+        value-column="name" keys="brand_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #season attr="season" title="season" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #year attr="year" title="year" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #total_revenue attr="total_revenue" title="total_revenue" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

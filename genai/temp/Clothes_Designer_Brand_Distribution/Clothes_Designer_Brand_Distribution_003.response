@@ -1,0 +1,98 @@
+{
+    "models": [
+        {
+            "classname": "Designer",
+            "code": "class Designer(Base):\n    \"\"\"description: A designer who creates fashion designs for a brand.\"\"\"\n    __tablename__ = 'designer'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    date_joined = Column(DateTime)\n    balance = Column(Integer)  # Derived using logic bank\n",
+            "description": "A designer who creates fashion designs for a brand.",
+            "name": "Designer"
+        },
+        {
+            "classname": "Brand",
+            "code": "class Brand(Base):\n    \"\"\"description: A fashion brand associated with designers and collections.\"\"\"\n    __tablename__ = 'brand'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    establishment_year = Column(Integer)\n    number_of_designs = Column(Integer)  # Derived using logic bank\n",
+            "description": "A fashion brand associated with designers and collections.",
+            "name": "Brand"
+        },
+        {
+            "classname": "Collection",
+            "code": "class Collection(Base):\n    \"\"\"description: A collection of fashion designs by a designer under a specific brand.\"\"\"\n    __tablename__ = 'collection'\n\n    id = Column(Integer, primary_key=True)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    season = Column(String, nullable=False)\n    year = Column(Integer)\n    total_revenue = Column(Integer)  # Derived using logic bank\n",
+            "description": "A collection of fashion designs by a designer under a specific brand.",
+            "name": "Collection"
+        },
+        {
+            "classname": "Design",
+            "code": "class Design(Base):\n    \"\"\"description: A specific fashion design within a collection.\"\"\"\n    __tablename__ = 'design'\n\n    id = Column(Integer, primary_key=True)\n    collection_id = Column(Integer, ForeignKey('collection.id'))\n    name = Column(String, nullable=False)\n    type = Column(String)\n    amount_sold = Column(Integer)\n    unit_price = Column(Integer)\n    revenue = Column(Integer)  # Derived using logic bank as amount_sold * unit_price\n",
+            "description": "A specific fashion design within a collection.",
+            "name": "Design"
+        },
+        {
+            "classname": "Store",
+            "code": "class Store(Base):\n    \"\"\"description: Store that sells fashion designs from various collections.\"\"\"\n    __tablename__ = 'store'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    location = Column(String)\n",
+            "description": "Store that sells fashion designs from various collections.",
+            "name": "Store"
+        },
+        {
+            "classname": "Stock",
+            "code": "class Stock(Base):\n    \"\"\"description: Stock details for designs available at stores.\"\"\"\n    __tablename__ = 'stock'\n\n    id = Column(Integer, primary_key=True)\n    store_id = Column(Integer, ForeignKey('store.id'))\n    design_id = Column(Integer, ForeignKey('design.id'))\n    quantity = Column(Integer)\n",
+            "description": "Stock details for designs available at stores.",
+            "name": "Stock"
+        },
+        {
+            "classname": "Sale",
+            "code": "class Sale(Base):\n    \"\"\"description: Sales transactions for specific designs at a store.\"\"\"\n    __tablename__ = 'sale'\n\n    id = Column(Integer, primary_key=True)\n    stock_id = Column(Integer, ForeignKey('stock.id'))\n    sale_date = Column(DateTime, nullable=False)\n    amount = Column(Integer, nullable=False)\n",
+            "description": "Sales transactions for specific designs at a store.",
+            "name": "Sale"
+        },
+        {
+            "classname": "Location",
+            "code": "class Location(Base):\n    \"\"\"description: Describes various geographic locations relevant to stores.\"\"\"\n    __tablename__ = 'location'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    region = Column(String)\n",
+            "description": "Describes various geographic locations relevant to stores.",
+            "name": "Location"
+        },
+        {
+            "classname": "Campaign",
+            "code": "class Campaign(Base):\n    \"\"\"description: Marketing campaigns for brand collections.\"\"\"\n    __tablename__ = 'campaign'\n\n    id = Column(Integer, primary_key=True)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    name = Column(String, nullable=False)\n    start_date = Column(DateTime)\n    end_date = Column(DateTime)\n",
+            "description": "Marketing campaigns for brand collections.",
+            "name": "Campaign"
+        },
+        {
+            "classname": "Participation",
+            "code": "class Participation(Base):\n    \"\"\"description: Participation of designers in various campaigns.\"\"\"\n    __tablename__ = 'participation'\n\n    id = Column(Integer, primary_key=True)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    campaign_id = Column(Integer, ForeignKey('campaign.id'))\n",
+            "description": "Participation of designers in various campaigns.",
+            "name": "Participation"
+        },
+        {
+            "classname": "Supplier",
+            "code": "class Supplier(Base):\n    \"\"\"description: Suppliers providing materials for creating fashion designs.\"\"\"\n    __tablename__ = 'supplier'\n\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    contact_info = Column(String)\n",
+            "description": "Suppliers providing materials for creating fashion designs.",
+            "name": "Supplier"
+        },
+        {
+            "classname": "Supply",
+            "code": "class Supply(Base):\n    \"\"\"description: Details of supplies provided to designers for creating designs.\"\"\"\n    __tablename__ = 'supply'\n\n    id = Column(Integer, primary_key=True)\n    supplier_id = Column(Integer, ForeignKey('supplier.id'))\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    material_name = Column(String, nullable=False)\n    quantity = Column(Integer)\n    date_provided = Column(DateTime)\n",
+            "description": "Details of supplies provided to designers for creating designs.",
+            "name": "Supply"
+        }
+    ],
+    "rules": [
+        {
+            "name": "Calculate Designer Balance",
+            "description": "Calculates Designer balance based on unpaid orders.",
+            "use_case": "Designer balance should reflect the sum of unpaid orders for their collections.",
+            "code": "Rule.sum(derive=Designer.balance, as_sum_of=Order.amount_total, where=lambda row: row.date_shipped is None)"
+        },
+        {
+            "name": "Calculate Collection Total Revenue",
+            "description": "Calculates total revenue for a collection of designs based on sales.",
+            "use_case": "Collections should show total revenue from all designs sold.",
+            "code": "Rule.sum(derive=Collection.total_revenue, as_sum_of=Design.revenue)"
+        },
+        {
+            "name": "Calculate Brand Number of Designs",
+            "description": "Counts total number of designs under a brand.",
+            "use_case": "Brand should have a count of all designs created under it.",
+            "code": "Rule.count(derive=Brand.number_of_designs, as_count_of=Design)"
+        }
+    ],
+    "test_data": "from datetime import datetime, date\n\n# Test data for Designer\nDesigner1 = Designer(id=1, name='John Doe', date_joined=datetime(2020, 5, 5), balance=10000)\nDesigner2 = Designer(id=2, name='Jane Smith', date_joined=datetime(2021, 7, 7), balance=15000)\nDesigner3 = Designer(id=3, name='Emily Johnson', date_joined=datetime(2019, 3, 3), balance=12000)\nDesigner4 = Designer(id=4, name='Michael Brown', date_joined=datetime(2018, 1, 1), balance=20000)\n\n# Test data for Brand\nBrand1 = Brand(id=1, name='High Fashion', establishment_year=1990, number_of_designs=50)\nBrand2 = Brand(id=2, name='Modern Styles', establishment_year=2005, number_of_designs=30)\nBrand3 = Brand(id=3, name='Classic Elegance', establishment_year=1980, number_of_designs=70)\nBrand4 = Brand(id=4, name='Urban Wear', establishment_year=2010, number_of_designs=40)\n\n# Test data for Collection\nCollection1 = Collection(id=1, designer_id=1, brand_id=1, season='Spring', year=2022, total_revenue=50000)\nCollection2 = Collection(id=2, designer_id=2, brand_id=2, season='Fall', year=2021, total_revenue=80000)\nCollection3 = Collection(id=3, designer_id=3, brand_id=3, season='Summer', year=2020, total_revenue=100000)\nCollection4 = Collection(id=4, designer_id=4, brand_id=4, season='Winter', year=2019, total_revenue=60000)\n\n# Test data for Design\nDesign1 = Design(id=1, collection_id=1, name='Evening Gown', type='Dress', amount_sold=100, unit_price=200, revenue=20000)\nDesign2 = Design(id=2, collection_id=2, name='Casual Shirt', type='Top', amount_sold=150, unit_price=50, revenue=7500)\nDesign3 = Design(id=3, collection_id=3, name='Designer Suit', type='Suit', amount_sold=50, unit_price=400, revenue=20000)\nDesign4 = Design(id=4, collection_id=4, name='Winter Coat', type='Outerwear', amount_sold=120, unit_price=300, revenue=36000)\n\n# Test data for Store\nStore1 = Store(id=1, name='Central Mall', location='Downtown City')\nStore2 = Store(id=2, name='Fashion Hub', location='Shopping Park')\nStore3 = Store(id=3, name='Luxury Plaza', location='City Center')\nStore4 = Store(id=4, name='Style Avenue', location='Suburban')\n\n# Test data for Stock\nStock1 = Stock(id=1, store_id=1, design_id=1, quantity=50)\nStock2 = Stock(id=2, store_id=2, design_id=2, quantity=60)\nStock3 = Stock(id=3, store_id=3, design_id=3, quantity=40)\nStock4 = Stock(id=4, store_id=4, design_id=4, quantity=70)\n\n# Test data for Sale\nSale1 = Sale(id=1, stock_id=1, sale_date=datetime(2023, 1, 10), amount=10)\nSale2 = Sale(id=2, stock_id=2, sale_date=datetime(2023, 1, 15), amount=20)\nSale3 = Sale(id=3, stock_id=3, sale_date=datetime(2023, 1, 20), amount=15)\nSale4 = Sale(id=4, stock_id=4, sale_date=datetime(2023, 1, 25), amount=25)\n\n# Test data for Location\nLocation1 = Location(id=1, name='New York', region='Northeast')\nLocation2 = Location(id=2, name='Los Angeles', region='West Coast')\nLocation3 = Location(id=3, name='Chicago', region='Midwest')\nLocation4 = Location(id=4, name='Houston', region='South')\n\n# Test data for Campaign\nCampaign1 = Campaign(id=1, brand_id=1, name='Spring Launch', start_date=datetime(2023, 3, 1), end_date=datetime(2023, 5, 31))\nCampaign2 = Campaign(id=2, brand_id=2, name='Fall Fest', start_date=datetime(2023, 9, 1), end_date=datetime(2023, 11, 30))\nCampaign3 = Campaign(id=3, brand_id=3, name='Summer Sale', start_date=datetime(2023, 6, 1), end_date=datetime(2023, 8, 31))\nCampaign4 = Campaign(id=4, brand_id=4, name='Winter Wonderland', start_date=datetime(2023, 12, 1), end_date=datetime(2024, 2, 28))\n\n# Test data for Participation\nParticipation1 = Participation(id=1, designer_id=1, campaign_id=1)\nParticipation2 = Participation(id=2, designer_id=2, campaign_id=2)\nParticipation3 = Participation(id=3, designer_id=3, campaign_id=3)\nParticipation4 = Participation(id=4, designer_id=4, campaign_id=4)\n\n# Test data for Supplier\nSupplier1 = Supplier(id=1, name='Fabric World', contact_info='fabric@example.com')\nSupplier2 = Supplier(id=2, name='Thread Co', contact_info='thread@example.com')\nSupplier3 = Supplier(id=3, name='Zipper Queen', contact_info='zipper@example.com')\nSupplier4 = Supplier(id=4, name='Button Kingdom', contact_info='button@example.com')\n\n# Test data for Supply\nSupply1 = Supply(id=1, supplier_id=1, designer_id=1, material_name='Silk', quantity=100, date_provided=datetime(2023, 2, 1))\nSupply2 = Supply(id=2, supplier_id=2, designer_id=2, material_name='Cotton', quantity=150, date_provided=datetime(2023, 2, 5))\nSupply3 = Supply(id=3, supplier_id=3, designer_id=3, material_name='Zippers', quantity=200, date_provided=datetime(2023, 2, 10))\nSupply4 = Supply(id=4, supplier_id=4, designer_id=4, material_name='Buttons', quantity=250, date_provided=datetime(2023, 2, 15))\n",
+    "name": "FashionDistributionSystem"
+}

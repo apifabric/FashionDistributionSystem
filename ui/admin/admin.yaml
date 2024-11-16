@@ -1,0 +1,339 @@
+about:
+  date: November 16, 2024 19:33:12
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 11
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Brand:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: establishment_year
+    - name: number_of_designs
+    - name: id
+    description: A fashion brand associated with designers and collections.
+    info_list: A fashion brand associated with designers and collections.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - brand_id
+      name: CampaignList
+      resource: Campaign
+    - direction: tomany
+      fks:
+      - brand_id
+      name: CollectionList
+      resource: Collection
+    type: Brand
+    user_key: name
+  Campaign:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: brand_id
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+    description: Marketing campaigns for brand collections.
+    info_list: Marketing campaigns for brand collections.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - campaign_id
+      name: ParticipationList
+      resource: Participation
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    type: Campaign
+    user_key: name
+  Collection:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: brand_id
+    - name: designer_id
+    - name: season
+      required: true
+    - name: year
+    - name: total_revenue
+    description: A collection of fashion designs by a designer under a specific brand.
+    info_list: A collection of fashion designs by a designer under a specific brand.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - collection_id
+      name: DesignList
+      resource: Design
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    type: Collection
+    user_key: id
+  Design:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: collection_id
+    - name: Type
+    - name: unit_price
+    - name: revenue
+    - name: id
+    - name: amount_sold
+    description: A specific fashion design within a collection.
+    info_list: A specific fashion design within a collection.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - design_id
+      name: StockList
+      resource: Stock
+    - direction: toone
+      fks:
+      - collection_id
+      name: collection
+      resource: Collection
+    type: Design
+    user_key: name
+  Designer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: balance
+    - name: id
+    - name: date_joined
+      type: DATETIME
+    description: A designer who creates fashion designs for a brand.
+    info_list: A designer who creates fashion designs for a brand.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - designer_id
+      name: CollectionList
+      resource: Collection
+    - direction: tomany
+      fks:
+      - designer_id
+      name: ParticipationList
+      resource: Participation
+    - direction: tomany
+      fks:
+      - designer_id
+      name: SupplyList
+      resource: Supply
+    type: Designer
+    user_key: name
+  Location:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: region
+    - name: id
+    description: Describes various geographic locations relevant to stores.
+    info_list: Describes various geographic locations relevant to stores.
+    type: Location
+    user_key: name
+  Participation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: campaign_id
+    - name: designer_id
+    description: Participation of designers in various campaigns.
+    info_list: Participation of designers in various campaigns.
+    tab_groups:
+    - direction: toone
+      fks:
+      - campaign_id
+      name: campaign
+      resource: Campaign
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    type: Participation
+    user_key: id
+  Sale:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: stock_id
+    - name: sale_date
+      required: true
+      type: DATETIME
+    - name: amount
+      required: true
+    description: Sales transactions for specific designs at a store.
+    info_list: Sales transactions for specific designs at a store.
+    tab_groups:
+    - direction: toone
+      fks:
+      - stock_id
+      name: stock
+      resource: Stock
+    type: Sale
+    user_key: id
+  Stock:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: design_id
+    - name: store_id
+    - name: quantity
+    description: Stock details for designs available at stores.
+    info_list: Stock details for designs available at stores.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - stock_id
+      name: SaleList
+      resource: Sale
+    - direction: toone
+      fks:
+      - design_id
+      name: design
+      resource: Design
+    - direction: toone
+      fks:
+      - store_id
+      name: store
+      resource: Store
+    type: Stock
+    user_key: id
+  Store:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: location
+    - name: id
+    description: Store that sells fashion designs from various collections.
+    info_list: Store that sells fashion designs from various collections.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - store_id
+      name: StockList
+      resource: Stock
+    type: Store
+    user_key: name
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: Suppliers providing materials for creating fashion designs.
+    info_list: Suppliers providing materials for creating fashion designs.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: SupplyList
+      resource: Supply
+    type: Supplier
+    user_key: name
+  Supply:
+    attributes:
+    - label: ' material_name*'
+      name: material_name
+      required: true
+      search: true
+      sort: true
+    - name: designer_id
+    - name: supplier_id
+    - name: quantity
+    - name: id
+    - name: date_provided
+      type: DATETIME
+    description: Details of supplies provided to designers for creating designs.
+    info_list: Details of supplies provided to designers for creating designs.
+    tab_groups:
+    - direction: toone
+      fks:
+      - designer_id
+      name: designer
+      resource: Designer
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: Supply
+    user_key: material_name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

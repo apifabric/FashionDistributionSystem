@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Designer",
+            "code": "class Designer(Base):\n    \"\"\"description: Designers with unique styles and profiles.\"\"\"\n    __tablename__ = 'designer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    country = Column(String)",
+            "description": "Designers with unique styles and profiles.",
+            "name": "Designer"
+        },
+        {
+            "classname": "Brand",
+            "code": "class Brand(Base):\n    \"\"\"description: Brands associated with designers and their collections.\"\"\"\n    __tablename__ = 'brand'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n\n    designer_name = relationship('Designer')",
+            "description": "Brands associated with designers and their collections.",
+            "name": "Brand"
+        },
+        {
+            "classname": "Store",
+            "code": "class Store(Base):\n    \"\"\"description: Stores that retail various designer brands.\"\"\"\n    __tablename__ = 'store'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    location = Column(String)",
+            "description": "Stores that retail various designer brands.",
+            "name": "Store"
+        },
+        {
+            "classname": "Collection",
+            "code": "class Collection(Base):\n    \"\"\"description: Collections within a brand that represent seasonal releases.\"\"\"\n    __tablename__ = 'collection'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    season = Column(String)\n    year = Column(Integer)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n\n    brand_name = relationship('Brand')",
+            "description": "Collections within a brand that represent seasonal releases.",
+            "name": "Collection"
+        },
+        {
+            "classname": "ClothingItem",
+            "code": "class ClothingItem(Base):\n    \"\"\"description: Individual clothing items that belong to different collections.\"\"\"\n    __tablename__ = 'clothing_item'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    size = Column(String)\n    price = Column(Integer)\n    collection_id = Column(Integer, ForeignKey('collection.id'))\n\n    collection_name = relationship('Collection')",
+            "description": "Individual clothing items that belong to different collections.",
+            "name": "ClothingItem"
+        },
+        {
+            "classname": "StoreInventory",
+            "code": "class StoreInventory(Base):\n    \"\"\"description: Inventory records for clothing items in stores.\"\"\"\n    __tablename__ = 'store_inventory'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    store_id = Column(Integer, ForeignKey('store.id'))\n    clothing_item_id = Column(Integer, ForeignKey('clothing_item.id'))\n    quantity_available = Column(Integer)\n\n    store_name = relationship('Store')\n    clothing_item_name = relationship('ClothingItem')",
+            "description": "Inventory records for clothing items in stores.",
+            "name": "StoreInventory"
+        },
+        {
+            "classname": "Country",
+            "code": "class Country(Base):\n    \"\"\"description: Countries where brands are distributed.\"\"\"\n    __tablename__ = 'country'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)",
+            "description": "Countries where brands are distributed.",
+            "name": "Country"
+        },
+        {
+            "classname": "BrandDistribution",
+            "code": "class BrandDistribution(Base):\n    \"\"\"description: Tracks which brands are distributed in which countries.\"\"\"\n    __tablename__ = 'brand_distribution'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    country_id = Column(Integer, ForeignKey('country.id'))\n\n    brand_name = relationship('Brand')\n    country_name = relationship('Country')",
+            "description": "Tracks which brands are distributed in which countries.",
+            "name": "BrandDistribution"
+        },
+        {
+            "classname": "StoreSales",
+            "code": "class StoreSales(Base):\n    \"\"\"description: Record of sales made by stores.\"\"\"\n    __tablename__ = 'store_sales'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    store_id = Column(Integer, ForeignKey('store.id'))\n    date_of_sale = Column(DateTime)\n    total_sale_amount = Column(Integer)\n\n    store_name = relationship('Store')",
+            "description": "Record of sales made by stores.",
+            "name": "StoreSales"
+        },
+        {
+            "classname": "Customer",
+            "code": "class Customer(Base):\n    \"\"\"description: Customers who purchase clothing items.\"\"\"\n    __tablename__ = 'customer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    email = Column(String)",
+            "description": "Customers who purchase clothing items.",
+            "name": "Customer"
+        },
+        {
+            "classname": "CustomerPurchase",
+            "code": "class CustomerPurchase(Base):\n    \"\"\"description: Details of purchases made by customers.\"\"\"\n    __tablename__ = 'customer_purchase'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'))\n    clothing_item_id = Column(Integer, ForeignKey('clothing_item.id'))\n    purchase_date = Column(DateTime)\n    quantity_purchased = Column(Integer)\n\n    customer_name = relationship('Customer')\n    clothing_item_name = relationship('ClothingItem')",
+            "description": "Details of purchases made by customers.",
+            "name": "CustomerPurchase"
+        },
+        {
+            "classname": "DesignerAward",
+            "code": "class DesignerAward(Base):\n    \"\"\"description: Awards received by designers for their contributions.\"\"\"\n    __tablename__ = 'designer_award'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    award_name = Column(String)\n    year_received = Column(Integer)\n\n    designer_name = relationship('Designer')",
+            "description": "Awards received by designers for their contributions.",
+            "name": "DesignerAward"
+        }
+    ],
+    "rules": [],
+    "test_data": "# Test Data for Designer\\ndesigner1 = Designer(name='Armani', country='Italy')\\ndesigner2 = Designer(name='Versace', country='Italy')\\ndesigner3 = Designer(name='Ralph Lauren', country='USA')\\ndesigner4 = Designer(name='Yves Saint Laurent', country='France')\\n\\n# Test Data for Brand\\nbrand1 = Brand(name='Emporio Armani', designer_id=designer1.id)\\nbrand2 = Brand(name='Versus', designer_id=designer2.id)\\nbrand3 = Brand(name='Polo Ralph Lauren', designer_id=designer3.id)\\nbrand4 = Brand(name='Saint Laurent', designer_id=designer4.id)\\n\\n# Test Data for Store\\nstore1 = Store(name='Bloomingdales', location='NYC')\\nstore2 = Store(name='Macy's', location='San Francisco')\\nstore3 = Store(name='Nordstrom', location='Seattle')\\nstore4 = Store(name='Harrods', location='London')\\n\\n# Test Data for Collection\\ncollection1 = Collection(name='Spring 2023', season='Spring', year=2023, brand_id=brand1.id)\\ncollection2 = Collection(name='Summer 2023', season='Summer', year=2023, brand_id=brand2.id)\\ncollection3 = Collection(name='Fall 2023', season='Fall', year=2023, brand_id=brand3.id)\\ncollection4 = Collection(name='Winter 2023', season='Winter', year=2023, brand_id=brand4.id)\\n\\n# Test Data for ClothingItem\\nclothing_item1 = ClothingItem(name='Dress', size='M', price=300, collection_id=collection1.id)\\nclothing_item2 = ClothingItem(name='Jacket', size='L', price=500, collection_id=collection2.id)\\nclothing_item3 = ClothingItem(name='Coat', size='S', price=700, collection_id=collection3.id)\\nclothing_item4 = ClothingItem(name='Jeans', size='M', price=150, collection_id=collection4.id)\\n\\n# Test Data for StoreInventory\\nstore_inventory1 = StoreInventory(store_id=store1.id, clothing_item_id=clothing_item1.id, quantity_available=10)\\nstore_inventory2 = StoreInventory(store_id=store2.id, clothing_item_id=clothing_item2.id, quantity_available=5)\\nstore_inventory3 = StoreInventory(store_id=store3.id, clothing_item_id=clothing_item3.id, quantity_available=15)\\nstore_inventory4 = StoreInventory(store_id=store4.id, clothing_item_id=clothing_item4.id, quantity_available=8)\\n\\n# Test Data for Country\\ncountry1 = Country(name='USA')\\ncountry2 = Country(name='Italy')\\ncountry3 = Country(name='France')\\ncountry4 = Country(name='UK')\\n\\n# Test Data for BrandDistribution\\nbrand_distribution1 = BrandDistribution(brand_id=brand1.id, country_id=country1.id)\\nbrand_distribution2 = BrandDistribution(brand_id=brand2.id, country_id=country2.id)\\nbrand_distribution3 = BrandDistribution(brand_id=brand3.id, country_id=country3.id)\\nbrand_distribution4 = BrandDistribution(brand_id=brand4.id, country_id=country4.id)\\n\\n# Test Data for StoreSales\\nstore_sales1 = StoreSales(store_id=store1.id, date_of_sale=date(2023, 3, 15), total_sale_amount=5000)\\nstore_sales2 = StoreSales(store_id=store2.id, date_of_sale=date(2023, 4, 22), total_sale_amount=7000)\\nstore_sales3 = StoreSales(store_id=store3.id, date_of_sale=date(2023, 5, 5), total_sale_amount=4500)\\nstore_sales4 = StoreSales(store_id=store4.id, date_of_sale=date(2023, 6, 30), total_sale_amount=6200)\\n\\n# Test Data for Customer\\ncustomer1 = Customer(name='Alice', email='alice@example.com')\\ncustomer2 = Customer(name='Bob', email='bob@example.com')\\ncustomer3 = Customer(name='Charlie', email='charlie@example.com')\\ncustomer4 = Customer(name='David', email='david@example.com')\\n\\n# Test Data for CustomerPurchase\\ncustomer_purchase1 = CustomerPurchase(customer_id=customer1.id, clothing_item_id=clothing_item1.id, purchase_date=date(2023, 3, 20), quantity_purchased=2)\\ncustomer_purchase2 = CustomerPurchase(customer_id=customer2.id, clothing_item_id=clothing_item2.id, purchase_date=date(2023, 4, 10), quantity_purchased=1)\\ncustomer_purchase3 = CustomerPurchase(customer_id=customer3.id, clothing_item_id=clothing_item3.id, purchase_date=date(2023, 5, 17), quantity_purchased=3)\\ncustomer_purchase4 = CustomerPurchase(customer_id=customer4.id, clothing_item_id=clothing_item4.id, purchase_date=date(2023, 6, 10), quantity_purchased=1)\\n\\n# Test Data for DesignerAward\\ndesigner_award1 = DesignerAward(designer_id=designer1.id, award_name='Fashion Icon 2023', year_received=2023)\\ndesigner_award2 = DesignerAward(designer_id=designer2.id, award_name='Best Creative 2023', year_received=2023)\\ndesigner_award3 = DesignerAward(designer_id=designer3.id, award_name='Outstanding Designs 2023', year_received=2023)\\ndesigner_award4 = DesignerAward(designer_id=designer4.id, award_name='Innovative Designs 2023', year_received=2023)",
+    "name": "Clothes_Designer_Brand_Distribution"
+}

@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="Stock" mode="tab" title="STOCK">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="StockTable" 
+            service="Stock" 
+            entity="Stock" 
+            title="STOCK"
+            keys="id"
+            columns="id;design_id;store_id;quantity" 
+            header-actions="R;D"
+            visible-columns="id;design_id;store_id;quantity"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="design_id" title="design_id">
+    <o-table-cell-renderer-service attr="design_id" 
+        service="Design" entity="DesignType" columns="id;name"
+        parent-keys="id:design_id"
+        value-column="name" keys="design_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="store_id" title="store_id">
+    <o-table-cell-renderer-service attr="store_id" 
+        service="Store" entity="StoreType" columns="id;name"
+        parent-keys="id:store_id"
+        value-column="name" keys="store_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #quantity attr="quantity" title="quantity" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

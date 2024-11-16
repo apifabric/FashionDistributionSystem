@@ -1,0 +1,2 @@
+Error creating database from model: November 16, 2024 19:32:39
+name 'DECIMAL' is not defined

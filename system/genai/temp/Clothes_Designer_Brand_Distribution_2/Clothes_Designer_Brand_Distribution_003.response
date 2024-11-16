@@ -1,0 +1,92 @@
+{
+    "models": [
+        {
+            "classname": "Designer",
+            "code": "class Designer(Base):\n    \"\"\"\n    description: This table stores information about fashion designers.\n    \"\"\"\n    __tablename__ = 'designer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    country = Column(String, nullable=True)\n    established_date = Column(Date, nullable=True)",
+            "description": "This table stores information about fashion designers.",
+            "name": "Designer"
+        },
+        {
+            "classname": "Brand",
+            "code": "class Brand(Base):\n    \"\"\"\n    description: This table stores information about brands under designers.\n    \"\"\"\n    __tablename__ = 'brand'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    launch_year = Column(Integer, nullable=True)",
+            "description": "This table stores information about brands under designers.",
+            "name": "Brand"
+        },
+        {
+            "classname": "Store",
+            "code": "class Store(Base):\n    \"\"\"\n    description: This table stores information about stores.\n    \"\"\"\n    __tablename__ = 'store'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    location = Column(String, nullable=True)",
+            "description": "This table stores information about stores.",
+            "name": "Store"
+        },
+        {
+            "classname": "RetailDistribution",
+            "code": "class RetailDistribution(Base):\n    \"\"\"\n    description: This table represents the distribution of brands to stores.\n    \"\"\"\n    __tablename__ = 'retail_distribution'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    store_id = Column(Integer, ForeignKey('store.id'))\n    distribution_date = Column(Date, nullable=True)",
+            "description": "This table represents the distribution of brands to stores.",
+            "name": "RetailDistribution"
+        },
+        {
+            "classname": "FashionItem",
+            "code": "class FashionItem(Base):\n    \"\"\"\n    description: This table stores information about fashion items.\n    \"\"\"\n    __tablename__ = 'fashion_item'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    price = Column(Decimal, nullable=True)\n    stock_quantity = Column(Integer, nullable=True)",
+            "description": "This table stores information about fashion items.",
+            "name": "FashionItem"
+        },
+        {
+            "classname": "Customer",
+            "code": "class Customer(Base):\n    \"\"\"\n    description: This table stores information about customers.\n    \"\"\"\n    __tablename__ = 'customer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    email = Column(String, nullable=True)",
+            "description": "This table stores information about customers.",
+            "name": "Customer"
+        },
+        {
+            "classname": "Order",
+            "code": "class Order(Base):\n    \"\"\"\n    description: This table stores information about customer orders.\n    \"\"\"\n    __tablename__ = 'order'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'))\n    order_date = Column(DateTime, nullable=False)\n    total_amount = Column(Decimal, nullable=True)",
+            "description": "This table stores information about customer orders.",
+            "name": "Order"
+        },
+        {
+            "classname": "OrderDetail",
+            "code": "class OrderDetail(Base):\n    \"\"\"\n    description: This table represents the details of each order.\n    \"\"\"\n    __tablename__ = 'order_detail'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    order_id = Column(Integer, ForeignKey('order.id'))\n    fashion_item_id = Column(Integer, ForeignKey('fashion_item.id'))\n    quantity = Column(Integer, nullable=False)\n    unit_price = Column(Decimal, nullable=True)\n    amount = Column(Decimal, nullable=True)",
+            "description": "This table represents the details of each order.",
+            "name": "OrderDetail"
+        },
+        {
+            "classname": "Promotion",
+            "code": "class Promotion(Base):\n    \"\"\"\n    description: This table stores information on promotions available at stores.\n    \"\"\"\n    __tablename__ = 'promotion'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    brand_id = Column(Integer, ForeignKey('brand.id'))\n    store_id = Column(Integer, ForeignKey('store.id'))\n    start_date = Column(Date, nullable=True)\n    end_date = Column(Date, nullable=True)\n    discount_rate = Column(Integer, nullable=True)",
+            "description": "This table stores information on promotions available at stores.",
+            "name": "Promotion"
+        },
+        {
+            "classname": "DesignerAward",
+            "code": "class DesignerAward(Base):\n    \"\"\"\n    description: This table stores information about awards of designers.\n    \"\"\"\n    __tablename__ = 'designer_award'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    designer_id = Column(Integer, ForeignKey('designer.id'))\n    award_name = Column(String, nullable=False)\n    award_year = Column(Integer, nullable=False)",
+            "description": "This table stores information about awards of designers.",
+            "name": "DesignerAward"
+        },
+        {
+            "classname": "Inventory",
+            "code": "class Inventory(Base):\n    \"\"\"\n    description: This table stores inventory details of fashion items in stores.\n    \"\"\"\n    __tablename__ = 'inventory'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    fashion_item_id = Column(Integer, ForeignKey('fashion_item.id'))\n    store_id = Column(Integer, ForeignKey('store.id'))\n    quantity_in_stock = Column(Integer, nullable=True)",
+            "description": "This table stores inventory details of fashion items in stores.",
+            "name": "Inventory"
+        },
+        {
+            "classname": "CustomerFeedback",
+            "code": "class CustomerFeedback(Base):\n    \"\"\"\n    description: This table stores feedback given by customers.\n    \"\"\"\n    __tablename__ = 'customer_feedback'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    customer_id = Column(Integer, ForeignKey('customer.id'))\n    fashion_item_id = Column(Integer, ForeignKey('fashion_item.id'))\n    feedback_text = Column(String, nullable=True)\n    feedback_date = Column(DateTime, nullable=False)",
+            "description": "This table stores feedback given by customers.",
+            "name": "CustomerFeedback"
+        }
+    ],
+    "rules": [
+        {
+            "name": "Calculate Order Total",
+            "description": "Calculate the total amount of an order as the sum of its order details' amounts.",
+            "use_case": "To provide a real-time calculation of order total in the system.",
+            "code": "Rule.sum(derive=Order.total_amount, as_sum_of=OrderDetail.amount)"
+        },
+        {
+            "name": "Calculate Order Detail Amount",
+            "description": "Calculate each order detail's amount as the product of quantity and unit price.",
+            "use_case": "To automatically update the amount based on quantity and unit price changes.",
+            "code": "Rule.formula(derive=OrderDetail.amount, as_expression=lambda row: row.quantity * row.unit_price)"
+        }
+    ],
+    "test_data": "from datetime import date, datetime\n\ndesigner1 = Designer(id=1, name='Gucci', country='Italy', established_date=date(1921, 1, 1))\ndesigner2 = Designer(id=2, name='Versace', country='Italy', established_date=date(1978, 1, 1))\ndesigner3 = Designer(id=3, name='Prada', country='Italy', established_date=date(1913, 1, 1))\ndesigner4 = Designer(id=4, name='Armani', country='Italy', established_date=date(1975, 1, 1))\n\nbrand1 = Brand(id=1, name='Gucci Mainline', designer_id=1, launch_year=1921)\nbrand2 = Brand(id=2, name='Versace Jeans Couture', designer_id=2, launch_year=1988)\nbrand3 = Brand(id=3, name='Prada Linea Rossa', designer_id=3, launch_year=1997)\nbrand4 = Brand(id=4, name='Emporio Armani', designer_id=4, launch_year=1981)\n\nstore1 = Store(id=1, name='Luxury Fashion', location='Paris')\nstore2 = Store(id=2, name='Designer Outlet', location='New York')\nstore3 = Store(id=3, name='High Street Beacons', location='London')\nstore4 = Store(id=4, name='Fashion Hub', location='Milan')\n\nretail_distribution1 = RetailDistribution(id=1, brand_id=1, store_id=1, distribution_date=date(2020, 1, 10))\nretail_distribution2 = RetailDistribution(id=2, brand_id=2, store_id=2, distribution_date=date(2020, 1, 15))\nretail_distribution3 = RetailDistribution(id=3, brand_id=3, store_id=3, distribution_date=date(2020, 2, 20))\nretail_distribution4 = RetailDistribution(id=4, brand_id=4, store_id=4, distribution_date=date(2020, 3, 25))\n\nfashion_item1 = FashionItem(id=1, name='Gucci Dress', brand_id=1, price=Decimal('1500.00'), stock_quantity=20)\nfashion_item2 = FashionItem(id=2, name='Versace T-shirt', brand_id=2, price=Decimal('250.00'), stock_quantity=50)\nfashion_item3 = FashionItem(id=3, name='Prada Sneakers', brand_id=3, price=Decimal('700.00'), stock_quantity=30)\nfashion_item4 = FashionItem(id=4, name='Armani Suit', brand_id=4, price=Decimal('2000.00'), stock_quantity=10)\n\ncustomer1 = Customer(id=1, name='John Doe', email='john@example.com')\ncustomer2 = Customer(id=2, name='Jane Smith', email='jane@example.com')\ncustomer3 = Customer(id=3, name='Alice Brown', email='alice@example.com')\ncustomer4 = Customer(id=4, name='Bob Martin', email='bob@example.com')\n\norder1 = Order(id=1, customer_id=1, order_date=datetime(2023, 11, 25), total_amount=Decimal('5000.00'))\norder2 = Order(id=2, customer_id=2, order_date=datetime(2023, 11, 26), total_amount=Decimal('2000.00'))\norder3 = Order(id=3, customer_id=3, order_date=datetime(2023, 11, 27), total_amount=Decimal('1500.00'))\norder4 = Order(id=4, customer_id=4, order_date=datetime(2023, 11, 28), total_amount=Decimal('3000.00'))\n\norder_detail1 = OrderDetail(id=1, order_id=1, fashion_item_id=1, quantity=2, unit_price=Decimal('1500.00'), amount=Decimal('3000.00'))\norder_detail2 = OrderDetail(id=2, order_id=2, fashion_item_id=2, quantity=3, unit_price=Decimal('250.00'), amount=Decimal('750.00'))\norder_detail3 = OrderDetail(id=3, order_id=3, fashion_item_id=3, quantity=2, unit_price=Decimal('700.00'), amount=Decimal('1400.00'))\norder_detail4 = OrderDetail(id=4, order_id=4, fashion_item_id=4, quantity=2, unit_price=Decimal('2000.00'), amount=Decimal('4000.00'))\n\npromotion1 = Promotion(id=1, brand_id=1, store_id=1, start_date=date(2023, 11, 1), end_date=date(2023, 11, 30), discount_rate=10)\npromotion2 = Promotion(id=2, brand_id=2, store_id=2, start_date=date(2023, 12, 1), end_date=date(2023, 12, 31), discount_rate=15)\npromotion3 = Promotion(id=3, brand_id=3, store_id=3, start_date=date(2023, 11, 15), end_date=date(2023, 12, 15), discount_rate=20)\npromotion4 = Promotion(id=4, brand_id=4, store_id=4, start_date=date(2023, 12, 10), end_date=date(2023, 12, 20), discount_rate=5)\n\ndesigner_award1 = DesignerAward(id=1, designer_id=1, award_name='Best Luxury Fashion', award_year=2020)\ndesigner_award2 = DesignerAward(id=2, designer_id=2, award_name='Innovative Design', award_year=2019)\ndesigner_award3 = DesignerAward(id=3, designer_id=3, award_name='Sustainable Fashion', award_year=2021)\ndesigner_award4 = DesignerAward(id=4, designer_id=4, award_name='Emerging Talent', award_year=2022)\n\ninventory1 = Inventory(id=1, fashion_item_id=1, store_id=1, quantity_in_stock=10)\ninventory2 = Inventory(id=2, fashion_item_id=2, store_id=2, quantity_in_stock=15)\ninventory3 = Inventory(id=3, fashion_item_id=3, store_id=3, quantity_in_stock=20)\ninventory4 = Inventory(id=4, fashion_item_id=4, store_id=4, quantity_in_stock=5)\n\ncustomer_feedback1 = CustomerFeedback(id=1, customer_id=1, fashion_item_id=1, feedback_text='Loved it!', feedback_date=datetime(2023, 11, 26))\ncustomer_feedback2 = CustomerFeedback(id=2, customer_id=2, fashion_item_id=2, feedback_text='Great fit.', feedback_date=datetime(2023, 11, 27))\ncustomer_feedback3 = CustomerFeedback(id=3, customer_id=3, fashion_item_id=3, feedback_text='Very comfortable.', feedback_date=datetime(2023, 11, 28))\ncustomer_feedback4 = CustomerFeedback(id=4, customer_id=4, fashion_item_id=4, feedback_text='Too expensive.', feedback_date=datetime(2023, 11, 29))",
+    "name": "FashionBrandDistribution"
+}

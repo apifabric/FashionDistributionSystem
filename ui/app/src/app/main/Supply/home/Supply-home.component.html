@@ -1,0 +1,55 @@
+<o-form-layout-manager attr="Supply" mode="tab" title="SUPPLY">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="SupplyTable" 
+            service="Supply" 
+            entity="Supply" 
+            title="SUPPLY"
+            keys="id"
+            columns="material_name;designer_id;supplier_id;quantity;id;date_provided" 
+            header-actions="R;D"
+            visible-columns="material_name;designer_id;supplier_id;quantity;id;date_provided"  
+            sort-columns="material_name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #material_name attr="material_name" title=" material_name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="supplier_id" title="supplier_id">
+    <o-table-cell-renderer-service attr="supplier_id" 
+        service="Supplier" entity="SupplierType" columns="id;name"
+        parent-keys="id:supplier_id"
+        value-column="name" keys="supplier_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #quantity attr="quantity" title="quantity" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column #date_provided attr="date_provided" title="date_provided" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

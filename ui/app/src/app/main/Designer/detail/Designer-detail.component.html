@@ -1,0 +1,205 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Designer_form_edit" 
+        service="Designer" 
+        entity="Designer" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-currency-input #balance attr="balance" title="balance" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator="," decimal-separator="."></o-currency-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-date-input #date_joined attr="date_joined" type="timestamp" label="date_joined" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="COLLECTION-designer_id">
+    <div layout-padding>
+      <o-table 
+        attr="CollectionTable" 
+        service="Collection" 
+        entity="Collection" 
+        keys="id"
+        parent-keys="designer_id:id"
+        columns="id;brand_id;designer_id;season;year;total_revenue"  
+        horizontal-scroll="yes"
+        detail-form-route="Collection" 
+        edit-form-route="Collection"
+        visible-columns="id;brand_id;designer_id;season;year;total_revenue"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="brand_id" title="brand_id">
+    <o-table-cell-renderer-service attr="brand_id" 
+        service="Brand" entity="BrandType" columns="id;name"
+        parent-keys="id:brand_id"
+        value-column="name" keys="brand_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #season attr="season" title="season" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column #year attr="year" title="year" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #total_revenue attr="total_revenue" title="total_revenue" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PARTICIPATION-designer_id">
+    <div layout-padding>
+      <o-table 
+        attr="ParticipationTable" 
+        service="Participation" 
+        entity="Participation" 
+        keys="id"
+        parent-keys="designer_id:id"
+        columns="id;campaign_id;designer_id"  
+        horizontal-scroll="yes"
+        detail-form-route="Participation" 
+        edit-form-route="Participation"
+        visible-columns="id;campaign_id;designer_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="campaign_id" title="campaign_id">
+    <o-table-cell-renderer-service attr="campaign_id" 
+        service="Campaign" entity="CampaignType" columns="id;name"
+        parent-keys="id:campaign_id"
+        value-column="name" keys="campaign_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="SUPPLY-designer_id">
+    <div layout-padding>
+      <o-table 
+        attr="SupplyTable" 
+        service="Supply" 
+        entity="Supply" 
+        keys="id"
+        parent-keys="designer_id:id"
+        columns="material_name;designer_id;supplier_id;quantity;id;date_provided"  
+        horizontal-scroll="yes"
+        detail-form-route="Supply" 
+        edit-form-route="Supply"
+        visible-columns="material_name;designer_id;supplier_id;quantity;id;date_provided"  
+        sort-columns="material_name" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #material_name attr="material_name" title=" material_name*" editable="no" required="yes" content-align="left"></o-table-column>
+        
+          <o-table-column attr="designer_id" title="designer_id">
+    <o-table-cell-renderer-service attr="designer_id" 
+        service="Designer" entity="DesignerType" columns="id;name"
+        parent-keys="id:designer_id"
+        value-column="name" keys="designer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="supplier_id" title="supplier_id">
+    <o-table-cell-renderer-service attr="supplier_id" 
+        service="Supplier" entity="SupplierType" columns="id;name"
+        parent-keys="id:supplier_id"
+        value-column="name" keys="supplier_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #quantity attr="quantity" title="quantity" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #date_provided attr="date_provided" title="date_provided" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>
